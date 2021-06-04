@@ -1,0 +1,20 @@
+{
+  "name": "fabeltjeskrant-v2",
+  "version": "2.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Gido Selten",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "socket.io": "^4.1.2"
+  },
+  "devDependencies": {},
+  "description": ""
+}

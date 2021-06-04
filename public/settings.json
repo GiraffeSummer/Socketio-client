@@ -1,0 +1,20 @@
+{
+    "selectedEvent": "message",
+    "singleBox": true,
+    "eventHistory": [
+        "message",
+        "msg"
+    ],
+    "connectionHistory": [
+        "http://localhost:3000"
+    ],
+    "currentConnection": "http://localhost:3000",
+    "isVolatile": false,
+    "messageObject": {
+        "data": {
+            "bool": true,
+            "string": "text",
+            "number": 11
+        }
+    }
+}
