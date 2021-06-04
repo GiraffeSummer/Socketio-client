@@ -29,18 +29,18 @@
 		data,
 	} from "./store.js";
 
-	$data = db.data;
-	$isVolatile = db.data.isVolatile;
-	$history = db.data.eventHistory;
+	$data = db.get();
+	$isVolatile = db.get("isVolatile");
+	$history = db.get("eventHistory");
 
-	let SingleBox = data.singleBox;
+	let SingleBox = $data.singleBox;
 
 	import Nav from "./components/Nav.svelte";
 	import { JSONEditor } from "svelte-jsoneditor";
 	import JsonReader from "./components/JsonReader.svelte";
 	import SingleReader from "./components/SingleReader.svelte";
 
-	let jsonEditorValue = db.data.messageObject || {
+	let jsonEditorValue = db.get("messageObject") || {
 		test: {
 			value1: 1,
 			values: "test",
@@ -101,7 +101,7 @@
 	const sendMsg = (evt) => {
 		const { event } = evt.detail;
 		db.set("messageObject", jsonEditorValue);
-		console.log(db.data);
+		console.log(db.get());
 		console.log("Send: ", event, $isVolatile);
 		if ($isVolatile) {
 			socket.volatile.emit(event, jsonEditorValue);
