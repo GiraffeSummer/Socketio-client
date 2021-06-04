@@ -32,7 +32,6 @@
 	$data = db.get();
 	$isVolatile = db.get("isVolatile");
 	$history = db.get("eventHistory");
-
 	let SingleBox = $data.singleBox;
 
 	import Nav from "./components/Nav.svelte";
@@ -118,7 +117,7 @@
 		}) || []; //make sure it's an array
 
 	isVolatile.subscribe((v) => {
-		db.set("isVolatile", v);
+		db.set("isVolatile", $isVolatile == false);
 	});
 	const jsonSave = () => {
 		db.set("messageObject", jsonEditorValue);

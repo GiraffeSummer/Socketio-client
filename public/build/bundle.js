@@ -5881,6 +5881,13 @@ var app = (function () {
     const DefaultPath = __dirname + "/settings.json";
 
     class NeuDB {
+        /**
+         *Creates an instance of NeuDB.
+         * @param {*} [data={}] default data, even old save files will be updated automatically
+         * @param {boolean} [autoSave=true] should it automatically save on push/set
+         * @param {*} [path=DefaultPath] path the savefile is in default = "__dirname/settings.json"
+         * @memberof NeuDB
+         */
         constructor(data = {}, autoSave = true, path = DefaultPath) {
             this.path = path;
             this.autoSave = autoSave;
@@ -5895,48 +5902,78 @@ var app = (function () {
             }
             console.log(this.path);
         }
-        //get data() { return this.saveData }
-        set data(data) {
-            this.saveData = data;
-
-            if (this.autoSave)
-                this.save();
-        }
+        /**
+         *
+         *Change filename of save file to: "__dirname/${filename}" don't forget to put .json
+         * @memberof NeuDB
+         */
         set filename(filename) {
             this.path = __dirname + "/" + filename;
         }
-        set(path, value) {
-            if (path.trim() == "") return new Error("Invalid path");
-            this.saveData[path] = value;
+        /**
+         *
+         * sets value of property
+         * @param {*} property property you want to set (ex. "name", or "user.name")
+         * @param {*} value value you want to set it to
+         * @memberof NeuDB
+         */
+        set(property, value) {
+            if (property.trim() == "") return new Error("Invalid path");
+            this.saveData[property] = value;
 
             if (this.autoSave)
                 this.save();
         }
-        get(path) {
-            if (path == undefined || path == "")
+        /**
+         *
+         * Get value of property
+         * @param {*} property property you want to get (ex. "name", or "user.name")
+         * @returns value of property
+         * @memberof NeuDB
+         */
+        get(property) {
+            if (property == undefined || property == "")
                 return this.saveData;
-            else if (this.saveData[path])
-                return this.saveData[path]
+            else if (this.saveData.hasOwnProperty(property) || property in this.saveData || this.saveData[property] !== undefined)
+                return this.saveData[property]
             else
                 return new Error("Invalid path")
         }
-        push(path, value, force = false) {
-            if (Array.isArray(this.saveData[path])) {
-                if (!this.saveData[path].includes(value) || force) {
-                    this.saveData[path].push(value);
+        /**
+         *
+         * push item to array property (no duplicates)
+         * @param {*} property property you want to push to (ex. "name", or "user.name")
+         * @param {*} value value to add to list
+         * @param {boolean} [force=false] if true always add, even if it already exists
+         * @memberof NeuDB
+         */
+        push(property, value, force = false) {
+            if (Array.isArray(this.saveData[property])) {
+                if (!this.saveData[property].includes(value) || force) {
+                    this.saveData[property].push(value);
 
                     if (this.autoSave)
                         this.save();
                 }
             }
             else {
-                console.log("push", path, this.saveData[path]);
+                console.log("push", property, this.saveData[property]);
                 throw new Error("not an array")
             }
         }
+        /**
+         * Save data to database
+         *
+         * @memberof NeuDB
+         */
         save() {
             SaveJson(this.saveData, this.path);
         }
+        /**
+         * Load data from database
+         * called Locally
+         * @memberof NeuDB
+         */
         load() {
             this.saveData = LoadJson(this.path);
         }
@@ -89166,7 +89203,7 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     	return child_ctx;
     }
 
-    // (183:1) {:else}
+    // (182:1) {:else}
     function create_else_block_2(ctx) {
     	let div;
     	let h2;
@@ -89176,9 +89213,9 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     			div = element("div");
     			h2 = element("h2");
     			h2.textContent = "You are not connected to anything yet.";
-    			add_location(h2, file, 184, 3, 4387);
+    			add_location(h2, file, 183, 3, 4404);
     			attr_dev(div, "class", "tile");
-    			add_location(div, file, 183, 2, 4364);
+    			add_location(div, file, 182, 2, 4381);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -89196,14 +89233,14 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		block,
     		id: create_else_block_2.name,
     		type: "else",
-    		source: "(183:1) {:else}",
+    		source: "(182:1) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (137:1) {#if $connected}
+    // (136:1) {#if $connected}
     function create_if_block(ctx) {
     	let jsoneditor;
     	let updating_json;
@@ -89304,35 +89341,35 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     			t12 = space();
     			if_block.c();
     			attr_dev(h3, "class", "subtitle is-3");
-    			add_location(h3, file, 139, 3, 3233);
+    			add_location(h3, file, 138, 3, 3250);
     			attr_dev(input, "type", "checkbox");
-    			add_location(input, file, 143, 6, 3370);
-    			add_location(label0, file, 142, 5, 3355);
+    			add_location(input, file, 142, 6, 3387);
+    			add_location(label0, file, 141, 5, 3372);
     			attr_dev(div0, "class", "column");
-    			add_location(div0, file, 141, 4, 3328);
+    			add_location(div0, file, 140, 4, 3345);
     			attr_dev(button, "class", "is-info");
-    			add_location(button, file, 151, 5, 3547);
+    			add_location(button, file, 150, 5, 3564);
     			attr_dev(div1, "class", "column");
-    			add_location(div1, file, 150, 4, 3520);
+    			add_location(div1, file, 149, 4, 3537);
     			attr_dev(label1, "for", "eventName");
-    			add_location(label1, file, 160, 5, 3734);
+    			add_location(label1, file, 159, 5, 3751);
     			option.__value = "";
     			option.value = option.__value;
-    			add_location(option, file, 163, 6, 3884);
+    			add_location(option, file, 162, 6, 3901);
     			attr_dev(select, "id", "events");
     			if (/*eventFilter*/ ctx[0] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[16].call(select));
-    			add_location(select, file, 162, 5, 3831);
+    			add_location(select, file, 161, 5, 3848);
     			attr_dev(div2, "class", "column");
-    			add_location(div2, file, 159, 4, 3707);
+    			add_location(div2, file, 158, 4, 3724);
     			attr_dev(div3, "class", "column");
-    			add_location(div3, file, 169, 4, 4040);
+    			add_location(div3, file, 168, 4, 4057);
     			attr_dev(div4, "class", "column");
-    			add_location(div4, file, 170, 4, 4068);
+    			add_location(div4, file, 169, 4, 4085);
     			attr_dev(div5, "name", "receivedControls");
     			attr_dev(div5, "class", "columns");
-    			add_location(div5, file, 140, 3, 3277);
+    			add_location(div5, file, 139, 3, 3294);
     			attr_dev(div6, "id", "receivedData");
-    			add_location(div6, file, 138, 2, 3205);
+    			add_location(div6, file, 137, 2, 3222);
     		},
     		m: function mount(target, anchor) {
     			mount_component(jsoneditor, target, anchor);
@@ -89475,14 +89512,14 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(137:1) {#if $connected}",
+    		source: "(136:1) {#if $connected}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (165:6) {#each $history as item}
+    // (164:6) {#each $history as item}
     function create_each_block_1(ctx) {
     	let option;
     	let t_value = /*item*/ ctx[26] + "";
@@ -89495,7 +89532,7 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     			t = text(t_value);
     			option.__value = option_value_value = /*item*/ ctx[26];
     			option.value = option.__value;
-    			add_location(option, file, 165, 7, 3955);
+    			add_location(option, file, 164, 7, 3972);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, option, anchor);
@@ -89518,14 +89555,14 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(165:6) {#each $history as item}",
+    		source: "(164:6) {#each $history as item}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (175:3) {:else}
+    // (174:3) {:else}
     function create_else_block(ctx) {
     	let each_1_anchor;
     	let current;
@@ -89641,14 +89678,14 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(175:3) {:else}",
+    		source: "(174:3) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (173:3) {#if SingleBox}
+    // (172:3) {#if SingleBox}
     function create_if_block_1(ctx) {
     	let singlereader;
     	let updating_json;
@@ -89708,14 +89745,14 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(173:3) {#if SingleBox}",
+    		source: "(172:3) {#if SingleBox}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (178:4) {:else}
+    // (177:4) {:else}
     function create_else_block_1(ctx) {
     	let p;
 
@@ -89723,7 +89760,7 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		c: function create() {
     			p = element("p");
     			p.textContent = "Nothing received yet";
-    			add_location(p, file, 178, 5, 4290);
+    			add_location(p, file, 177, 5, 4307);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -89737,14 +89774,14 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(178:4) {:else}",
+    		source: "(177:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (176:4) {#each filteredMessages as message}
+    // (175:4) {#each filteredMessages as message}
     function create_each_block(ctx) {
     	let jsonreader;
     	let current;
@@ -89788,7 +89825,7 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(176:4) {#each filteredMessages as message}",
+    		source: "(175:4) {#each filteredMessages as message}",
     		ctx
     	});
 
@@ -89823,7 +89860,7 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     			create_component(nav.$$.fragment);
     			t = space();
     			if_block.c();
-    			add_location(main, file, 130, 0, 3019);
+    			add_location(main, file, 129, 0, 3036);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -90007,7 +90044,7 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
     	};
 
     	isVolatile.subscribe(v => {
-    		db.set("isVolatile", v);
+    		db.set("isVolatile", $isVolatile == false);
     	});
 
     	const jsonSave = () => {
@@ -90149,9 +90186,7 @@ background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZg
 
     const app = new App({
     	target: document.body,
-    	props: {
-    		name: 'world'
-    	}
+    	props: {}
     });
 
     return app;

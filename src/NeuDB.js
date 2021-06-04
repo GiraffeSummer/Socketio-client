@@ -55,7 +55,7 @@ export class NeuDB {
     get(property) {
         if (property == undefined || property == "")
             return this.saveData;
-        else if (this.saveData[property])
+        else if (this.saveData.hasOwnProperty(property) || property in this.saveData || this.saveData[property] !== undefined)
             return this.saveData[property]
         else
             return new Error("Invalid path")
